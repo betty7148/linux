@@ -1,11 +1,6 @@
 import Vue from 'vue';
 import Mint from 'mint-ui';
 
-// 2.1 导入 vue-resource
-// import VueResource from 'vue-resource'
-// // 2.2 安装 vue-resource
-// Vue.use(VueResource)
-
 
 import './lib/mui/css/mui.css';
 import "./lib/mui/css/icons-extra.css"
@@ -15,6 +10,9 @@ Vue.component(Header.name, Header);
 import { Swipe, SwipeItem } from 'mint-ui';
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
+import { Button } from 'mint-ui';
+Vue.component(Button.name, Button);
+
 
 import app from './App.vue';
 
@@ -28,9 +26,39 @@ Vue.use(routerVue);
 import VueResource from 'vue-resource'
 Vue.use(VueResource);
 
+//设置接口根路径
+Vue.http.options.root="http://www.liulongbin.top:3005";
 var vue=new Vue({
     el:"#app",
     render: c => c(app),
     // router
     router
+})
+
+// 全局设置 post 时候表单数据格式组织形式   application/x-www-form-urlencoded
+Vue.http.options.emulateJSON = true;
+
+//设置全局过滤器
+Vue.filter('dateFormat', function (time, pattern = "") {
+    var dateform = new Date(time);
+    var yy = dateform.getFullYear();
+    var mm = dateform.getMonth()+1;
+    mm=mm<10?"0"+mm:mm;
+    var dd = dateform.getDate()<10?"0"+dateform.getDate():dateform.getDate();
+    if (pattern.toLowerCase() == 'yyyy-mm-dd') {
+        //注意这里不是'' 而是tab上面的``
+        return `${yy}-${mm}-${dd}`;
+    } else {
+        var hh = dateform.getHours()<10?"0"+dateform.getHours():dateform.getHours();
+        var se = dateform.getMinutes()<10?"0"+dateform.getMinutes():dateform.getMinutes();
+        var ss = dateform.getSeconds()<10?"0"+dateform.getSeconds():dateform.getSeconds();
+        return `${yy}-${mm}-${dd} ${hh}:${se}:${ss}`;
+    }
+})
+
+Vue.filter('contentFormat',function(content){
+    if(content=='undefined'){
+        return '该用户很懒，没有留下任何评论'
+    }
+    else return content;
 })
