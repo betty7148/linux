@@ -67,10 +67,12 @@ export default {
 .mui-content img{
   height:40px;
   width:40px;
+  box-shadow:none;
 }
 .swip img{
   width:100%;
   height:200px;
 }
+
 </style>
 

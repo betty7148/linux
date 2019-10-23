@@ -37,7 +37,7 @@ export default {
                 else{
                     this.commentlist =this.commentlist.concat(result.data.message);
                 }
-                console.log(this.commentlist);
+                // console.log(this.commentlist);
             })
         },
         getMore(){
@@ -51,7 +51,7 @@ export default {
             this.$http.post('api/postcomment/'+this.artid,{
                     content: this.message.trim()
                 }).then((result)=>{
-                    console.log(result);
+                    // console.log(result);
                     if(result.body.status==0){
                         var newcomment={
                             add_time:Date.now(),

@@ -1,18 +1,22 @@
 import Vue from 'vue';
 import Mint from 'mint-ui';
 
-
 import './lib/mui/css/mui.css';
 import "./lib/mui/css/icons-extra.css"
 
+//顶部
 import { Header } from 'mint-ui';
 Vue.component(Header.name, Header);
+//滑动栏
 import { Swipe, SwipeItem } from 'mint-ui';
 Vue.component(Swipe.name, Swipe);
 Vue.component(SwipeItem.name, SwipeItem);
+//按钮
 import { Button } from 'mint-ui';
 Vue.component(Button.name, Button);
-
+//懒加载
+import { Lazyload } from 'mint-ui';
+Vue.use(Lazyload);
 
 import app from './App.vue';
 
@@ -22,9 +26,15 @@ import router from "./router.js"
 
 Vue.use(routerVue);
 
-//vue-resource
+//vue-resource 发起http请求
 import VueResource from 'vue-resource'
 Vue.use(VueResource);
+
+
+//缩略图
+import VuePreview from 'vue-preview';
+Vue.use(VuePreview)
+
 
 //设置接口根路径
 Vue.http.options.root="http://www.liulongbin.top:3005";
@@ -62,3 +72,4 @@ Vue.filter('contentFormat',function(content){
     }
     else return content;
 })
+
