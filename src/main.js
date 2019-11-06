@@ -19,6 +19,9 @@ Vue.component(Button.name, Button);
 //懒加载
 import { Lazyload } from 'mint-ui';
 Vue.use(Lazyload);
+//选中按钮
+import { Switch } from 'mint-ui';
+Vue.component(Switch.name, Switch);
 //首页
 import app from './App.vue';
 
@@ -55,13 +58,21 @@ var store= new Vuex.Store({
             });
             localStorage.setItem('shopcar',JSON.stringify(state.shopcar));
         },
-        getCountById(state,id){
-            state.shopcar.some(element=>{
-                if(element.id==id){
-                    console.log("数量"+element.count);
-                    return element.count;
+        deleteShopCar(state,goods){
+            state.shopcar.some((element,index)=>{
+                if(element.id==goods.id){
+                    state.shopcar.splice(index,1);
                 }
             })
+            localStorage.setItem('shopcar',JSON.stringify(state.shopcar));
+        },
+        setGoodsSelected(state,goods){
+            state.shopcar.some((element)=>{
+                if(element.id==goods.id){
+                    element.select=goods.select;
+                }
+            })
+            localStorage.setItem('shopcar',JSON.stringify(state.shopcar));
         }
     },
     getters:{//this.$store.getters.**
@@ -72,6 +83,7 @@ var store= new Vuex.Store({
             });
             return count;
         },
+        //getters不能传参数
         getGoodsCount(state) {
             var o = {}
             state.shopcar.forEach(item => {
@@ -79,6 +91,27 @@ var store= new Vuex.Store({
             })
             return o
           },
+          getGoodsSelected(state){
+              var o={};
+              state.shopcar.forEach(element=>{
+                  o[element.id]=element.select;
+              })
+              return o;
+          },
+          getTotalCount(state){
+              var count=0;
+              state.shopcar.forEach(element=>{
+                if(element.select)count+=element.count;
+              })
+            return count;
+          },
+          getTotalPrice(state){
+            var price=0;
+            state.shopcar.forEach(element=>{
+              if(element.select)price+=element.count*element.price;
+            })
+           return price;
+          }
        
     }
 })

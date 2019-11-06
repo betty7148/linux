@@ -1,6 +1,6 @@
 <template>
-<div style="margin:10px 0px">
-   <div class="mui-numbox" data-numbox-step='1' data-numbox-min='1' data-numbox-max='100'>
+<div >
+   <div class="mui-numbox" data-numbox-step='1' data-numbox-min='1' data-numbox-max='100' style="height:25px;">
         <button class="mui-btn mui-numbox-btn-minus" type="button">-</button>
         <input class="mui-numbox-input" type="number" :value="initValue"  @change="updateState" ref="numbox"/>
         <button class="mui-btn mui-numbox-btn-plus" type="button">+</button>
@@ -26,7 +26,7 @@ export default {
     methods:{
         updateState(){
             console.log(this.id);
-            this.$store.updateShopCar({
+            this.$store.commit('updateShopCar',{
                 id:this.id,
                 count:Number.parseInt(this.$refs.numbox.value)
             });
