@@ -1,6 +1,11 @@
 <template>
   <div class="wrap">
-      <mt-header fixed title="新闻专栏"></mt-header>
+     <mt-header fixed title="新闻专栏">
+        <span  slot="left" @click="goBack">
+          <mt-button icon="back">返回</mt-button>
+        </span>
+      <!-- <mt-button icon="more" slot="right"></mt-button> -->
+      </mt-header>
      	<transition>
          <router-view></router-view>
 		   </transition> 
@@ -15,8 +20,8 @@
           <span class="mui-icon mui-icon-contact"></span>
           <span class="mui-tab-label">会员</span>
         </router-link>
-        <router-link class="mui-tab-item1" to="/shopcar">
-          <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge">9</span></span>
+        <router-link class="mui-tab-item1" to="/shopcar" >
+          <span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge" id="icon" >{{this.$store.getters.getAllCount}}</span></span>
           <span class="mui-tab-label">购物车</span>
         </router-link>
         <router-link class="mui-tab-item1" to="/search">
@@ -28,6 +33,20 @@
 </template>
 
 <script>
+export default{
+  data(){
+    return{
+
+    }
+  },
+  methods:{
+    goBack(){
+      if(this.$router.path!="/"){
+          this.$router.go(-1);
+      }
+    }
+  }
+}
 </script>
 
 
@@ -38,6 +57,7 @@
 }
 .v-enter{
   opacity: 0;
+  
   transform: translateX(100%);
 }
 .v-leave-to{

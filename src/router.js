@@ -11,7 +11,10 @@ import newsinfo from "./subComponents/newsInfoContainer.vue";
 import image from "./subComponents/imageShareContainer.vue";
 import imageinfo from "./subComponents/imageInfoContainer.vue";
 
-import goods from "./subComponents/goodsContainer.vue";
+import goods from "./subComponents/goods/goodsContainer.vue";
+import goodsinfo from "./subComponents/goods/goodsInfoContainer.vue";
+import goodscomment from "./subComponents/goods/goodsComment.vue";
+import goodsdesc from "./subComponents/goods/goodsDesc.vue";
 // import imagelist from ""
 // 3. 创建路由对象
 var router = new VueRouter({
@@ -25,7 +28,10 @@ var router = new VueRouter({
     {path:"/home/getnewslist/:id",component:newsinfo},
     {path:"/home/imgShare",component:image},
     {path:"/home/imgShare/:id",component:imageinfo},
-    {path:"/home/goodsBuy",component:goods}
+    {path:"/home/goodsBuy",component:goods},
+    {path:"/home/goodsBuy/goodsInfo/:id",component:goodsinfo},
+    {path:"/home/goodsBuy/goodsInfo/goodsDes/:id",component:goodsdesc},
+    {path:"/home/goodsBuy/goodsInfo/goodscomment/:id",component:goodscomment}
   ],
   linkActiveClass: 'mui-active'
 })

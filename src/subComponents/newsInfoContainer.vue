@@ -10,15 +10,12 @@
         <div v-html="newslist.content"></div>
         <br>
         <!--评论组件-->
-        <comment v-bind:artid="this.id"></comment>
-        <br>
-        <br>
-        <br>
+        <comment v-bind:id="this.id"></comment>
     </div>
 </template>
 
 <script>
-import comment from "./commentContainer.vue";
+import comment from "../commonComponents/commentContainer.vue";
 export default {
     data(){
         return {

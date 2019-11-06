@@ -11,6 +11,9 @@
             </div>
         </div>
         <mt-button type="danger" plain size="large" @click="getMore">加载更多</mt-button>
+        <br>
+        <br>
+        <br>
     </div>
     
 </template>
@@ -25,14 +28,14 @@ export default {
             message:''
         }
     },
-    props:["artid"],
+    props:["id"],
     created(){
         this.getComment();
     },
     methods:{
         getComment(){
-            console.log("id:"+this.artid);
-            this.$http.get("api/getcomments/"+this.artid+"?pageindex="+this.pageindex).then((result)=>{
+            console.log("id:"+this.id);
+            this.$http.get("api/getcomments/"+this.id+"?pageindex="+this.pageindex).then((result)=>{
                 if(result.data.status==1)return result.data.message;
                 else{
                     this.commentlist =this.commentlist.concat(result.data.message);
@@ -48,7 +51,7 @@ export default {
             if(this.message.trim().length==0){
                 return Toast('评论内容不能为空！');
             }
-            this.$http.post('api/postcomment/'+this.artid,{
+            this.$http.post('api/postcomment/'+this.id,{
                     content: this.message.trim()
                 }).then((result)=>{
                     // console.log(result);

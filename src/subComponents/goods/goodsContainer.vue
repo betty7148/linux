@@ -1,7 +1,7 @@
 <template>
     <div class="goodslist">
         <ul>
-            <li v-for='(item) in goodslist' :key='item.id'>
+            <li v-for='(item) in goodslist' :key='item.id' @click="getDetail(item.id)">
                 <img :src="item.img_url">
                 <h4>{{item.title}}</h4>
                 <div class="price">
@@ -13,12 +13,15 @@
                         <span>&nbsp;热卖中</span>
                         <span>剩{{item.stock_quantity}}件</span>
                     </div>
-                    
-                    
                 </div>
             </li>
         </ul>
+       <mt-button type="danger" plain size="large" @click="getMore">加载更多</mt-button>
+       <br>
+       <br>
+       <br>
     </div>
+    
 </template>
 
 <script>
@@ -41,9 +44,17 @@ export default {
                     Toast('商品列表信息获取失败！');
                 }else{
                     console.dir(result.data.message);
-                    this.goodslist=result.data.message;
+                    this.goodslist=this.goodslist.concat(result.data.message);
                 }
             })
+        },
+        getMore(){
+            this.number=this.number+1;
+            this.getGoodList();
+        },
+        getDetail(id){
+            console.log("id:"+id);
+            this.$router.push("/home/goodsBuy/goodsInfo/"+id);
         }
     }
 }

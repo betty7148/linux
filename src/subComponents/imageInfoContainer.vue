@@ -9,21 +9,18 @@
             <vue-preview :slides="imgsuolue" @close="handleClose"></vue-preview>
             <div class="content" v-html="imginfo[0].content"></div>
             <!--评论组件-->
-            <comment v-bind:artid="this.id"></comment>
-            <br>
-            <br>
-            <br>
+            <comment v-bind:id="this.id"></comment>
     </div>
 </template>
 
 <script>
 import { Toast } from 'mint-ui';
-import comment from "./commentContainer.vue";
+import comment from "../commonComponents/commentContainer.vue";
 export default {
     data(){
         return{
             id:this.$route.params.id,
-            imginfo:[],
+            imginfo:[{title:''}],
             imgsuolue:[],
             // slide1: [
             //     {

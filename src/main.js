@@ -4,6 +4,8 @@ import Mint from 'mint-ui';
 import './lib/mui/css/mui.css';
 import "./lib/mui/css/icons-extra.css"
 
+import mui from "./lib/mui/js/mui.min.js"
+
 //顶部
 import { Header } from 'mint-ui';
 Vue.component(Header.name, Header);
@@ -17,8 +19,69 @@ Vue.component(Button.name, Button);
 //懒加载
 import { Lazyload } from 'mint-ui';
 Vue.use(Lazyload);
-
+//首页
 import app from './App.vue';
+
+//vuex
+import Vuex from 'vuex'
+Vue.use(Vuex)
+
+var shopcar=JSON.parse(localStorage.getItem('shopcar')||'[]');
+var store= new Vuex.Store({
+    state:{//this.$store.state.**
+        shopcar:shopcar
+    },
+    mutations:{//this.$store.commit("方法名","按需传递唯一的参数")
+        addToShopCar(state,goods){
+            var flag=false;
+            state.shopcar.some(element => {
+                if(element.id==goods.id){
+                    //如果已存在，则将数量相加即可
+                    element.count+=goods.count;
+                    flag=true;
+                }
+            });
+            if(!flag){
+                state.shopcar.push(goods);
+            }
+            localStorage.setItem('shopcar',JSON.stringify(state.shopcar));
+        },
+        updateShopCar(state,goods){
+            state.shopcar.some(element => {
+                if(element.id==goods.id){
+                    //如果已存在，则将数量相加即可
+                    element.count=goods.count;
+                }
+            });
+            localStorage.setItem('shopcar',JSON.stringify(state.shopcar));
+        },
+        getCountById(state,id){
+            state.shopcar.some(element=>{
+                if(element.id==id){
+                    console.log("数量"+element.count);
+                    return element.count;
+                }
+            })
+        }
+    },
+    getters:{//this.$store.getters.**
+        getAllCount(state){
+            var count=0;
+            state.shopcar.forEach(element => {
+                count+=element.count;
+            });
+            return count;
+        },
+        getGoodsCount(state) {
+            var o = {}
+            state.shopcar.forEach(item => {
+              o[item.id] = item.count
+            })
+            return o
+          },
+       
+    }
+})
 
 //路由
 import routerVue from 'vue-router'
@@ -42,7 +105,8 @@ var vue=new Vue({
     el:"#app",
     render: c => c(app),
     // router
-    router
+    router,
+    store
 })
 
 // 全局设置 post 时候表单数据格式组织形式   application/x-www-form-urlencoded
@@ -72,4 +136,4 @@ Vue.filter('contentFormat',function(content){
     }
     else return content;
 })
-
+export default mui

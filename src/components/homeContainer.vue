@@ -1,8 +1,6 @@
 <template>
 <div class="clear_font">
-      <mt-swipe :auto="4000" class="swip" >
-        <mt-swipe-item v-for="(item) in lunboarr" :key='item.id'><img :src='item.img'></mt-swipe-item>
-      </mt-swipe>
+      <lunbo :lunboarr="lunboarr" :isfull='true'></lunbo>
       <div class="mui-content">
         <ul class="mui-table-view mui-grid-view mui-grid-9">
           <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><router-link to="/home/getNews">
@@ -29,20 +27,28 @@
      
 </template>
 <script>
+import lunbo from "../commonComponents/lunbo.vue"
 export default {
     data(){
       return{
-          lunboarr:[]
+          lunboarr:[],
+          isfull:true
       }
     },
     created(){
       this.getLunbo();
+    },
+    components:{
+      lunbo
     },
     methods:{
       getLunbo(){
         this.$http.get("api/getlunbo").then(result =>{
           console.log(result.data.message);
           this.lunboarr=result.data.message;
+          this.lunboarr.forEach(element => {
+              element.src=element.img;
+          });
         })
       }
     }
@@ -58,9 +64,7 @@ export default {
 .mui-grid-view.mui-grid-9 .mui-table-view-cell{
   border:none;
 }
-.swip{
-  height:200px;
-}
+
 .mui-content {
   margin-top:-20px;
 }
@@ -69,10 +73,5 @@ export default {
   width:40px;
   box-shadow:none;
 }
-.swip img{
-  width:100%;
-  height:200px;
-}
-
 </style>
 

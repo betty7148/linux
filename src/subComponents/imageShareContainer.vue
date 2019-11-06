@@ -28,8 +28,8 @@
 
 <script>
 import { Toast } from 'mint-ui';
-import mui from "../lib/mui/js/mui.js"
-
+// import mui from "../lib/mui/js/mui.js"
+import mui from "../main.js"
 export default {
     data(){
         return{
